@@ -72,7 +72,7 @@ func (workspace *Workspace) DumpObject(name string) {
 		fmt.Println("Attribute Name", attr)
 		obj.printValue(obj.GetAttribute(attr))
 	}
-  return
+	return
 }
 
 func (workspace *Workspace) Dump() {
@@ -81,7 +81,7 @@ func (workspace *Workspace) Dump() {
 		fmt.Println("Object:-Name-", object_name)
 		workspace.DumpObject(object_name)
 	}
-  return
+	return
 }
 
 func (workspace *Workspace) GetOutputObject(object_name string) map[string]interface{} {

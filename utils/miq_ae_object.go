@@ -6,8 +6,8 @@ import (
 )
 
 type MiqAeObject struct {
-	workspace  *Workspace
-	name string
+	workspace *Workspace
+	name      string
 }
 
 func (miq_object *MiqAeObject) printValue(value interface{}) {
