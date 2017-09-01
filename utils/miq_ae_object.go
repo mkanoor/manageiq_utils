@@ -8,6 +8,7 @@ import (
 type MiqAeObject struct {
 	workspace *Workspace
 	name      string
+	attrs     attributes
 }
 
 func (miq_object *MiqAeObject) printValue(value interface{}) {
@@ -29,7 +30,7 @@ func (miq_object *MiqAeObject) printValue(value interface{}) {
 }
 
 func (obj *MiqAeObject) GetAttribute(attribute_name string) interface{} {
-	value := obj.workspace.Input.AeObjects[obj.name][attribute_name]
+	value := obj.attrs[attribute_name]
 	original, ok := value.(string)
 	if ok && strings.HasPrefix(original, "vmdb_reference::") {
 		n := strings.Split(original, "::")[1]
@@ -37,12 +38,12 @@ func (obj *MiqAeObject) GetAttribute(attribute_name string) interface{} {
 		vmdb.Fetch()
 		return vmdb
 	} else {
-		return obj.workspace.Input.AeObjects[obj.name][attribute_name]
+		return value
 	}
 }
 
 func (obj *MiqAeObject) SetAttribute(attribute_name string, attribute_value interface{}) {
-	obj.workspace.Input.AeObjects[obj.name][attribute_name] = attribute_value
+	obj.attrs[attribute_name] = attribute_value
 	obj.workspace.GetOutputObject(obj.name)[attribute_name] = attribute_value
 	return
 }
@@ -50,7 +51,7 @@ func (obj *MiqAeObject) SetAttribute(attribute_name string, attribute_value inte
 func (obj *MiqAeObject) GetAttributeList() []string {
 	var keys []string
 
-	for key, _ := range obj.workspace.Input.AeObjects[obj.name] {
+	for key, _ := range obj.attrs {
 		keys = append(keys, key)
 	}
 	return keys

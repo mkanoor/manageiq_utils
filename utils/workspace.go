@@ -94,13 +94,14 @@ func (workspace *Workspace) GetOutputObject(object_name string) map[string]inter
 
 func (workspace *Workspace) GetObject(object_name string) (*MiqAeObject, error) {
 	var obj MiqAeObject
-	_, err := workspace.Input.AeObjects[object_name]
+	attrs, err := workspace.Input.AeObjects[object_name]
 	if !err {
 		return nil, errors.New("Object " + object_name + "not found in workspace")
 	}
 
 	obj.workspace = workspace
 	obj.name = object_name
+	obj.attrs = attrs
 	return &obj, nil
 }
 
